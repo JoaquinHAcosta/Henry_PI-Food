@@ -10,6 +10,8 @@ const server = express();
 
 server.name = 'API';
 
+server.use(express.json())
+//^^ y vv hacen lo mismo, express.json() se añadio luego, antes se usaba bodyparser
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyParser.json({ limit: '50mb' }));
 server.use(cookieParser());
@@ -21,7 +23,7 @@ server.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   next();
 });
-
+//^^ el cors es que mi servidor se rompa al realizar una coneccion con el browser
 server.use('/', routes);
 
 // Error catching endware.
