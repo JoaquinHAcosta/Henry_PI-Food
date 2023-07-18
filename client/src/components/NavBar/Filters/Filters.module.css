@@ -7,7 +7,7 @@ select {
 
     /* styling */
     background-color: white;
-    border: thin solid #841ee2;
+    border: thin solid #333;
     border-radius: 4px;
     display: inline-block;
     font: inherit;

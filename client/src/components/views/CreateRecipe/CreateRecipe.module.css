@@ -1,20 +1,28 @@
-.card {
-    width: 500px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+
+  .card {
+    user-select: none;
+    max-width: 700px;
+    margin: 3rem auto;
+    border: 1px solid #ecc40e22;
+    background-color: #24b806;
+    background: linear-gradient(0deg, rgb(20, 160, 27) 0%, rgba(35, 122, 17, 0.5) 100%);
+    box-shadow: 0 7px 20px 5px #00000088;
+    border-radius: .7rem;
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
     overflow: hidden;
-    margin: 10px;
-  }
+    transition: .5s all;
+    padding: 1rem 2rem;
+}
   
   .cardHeader {
     background-color: #333;
     padding: 16px;
     text-align: center;
+    border-radius: 4px;
   }
   
   .cardHeader .textHeader {
-    margin: 0;
     font-size: 18px;
     color: rgb(255, 255, 255);
   }
@@ -43,9 +51,7 @@
     resize: none;
   }
 
-  .formGroup input[type="text"],
-  .formGroup input[type="email"],
-  .formGroup input[type="password"] {
+  .formGroup input[type="text"] {
     width: 100%;
     padding: 8px;
     font-size: 14px;
@@ -70,3 +76,122 @@
     background-color: #ccc;
     color: #333;
   }
+
+  .formDiet {
+    /* margin: 0 1em 10px auto; */
+    text-align: center;
+    display: flex;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 1px;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
+.dietsC{
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    border: 1px solid red;
+    border-radius: 4px;
+    width: 170px;
+}
+
+.formDiet input[type="checkbox"]:checked {
+  color: #333;
+}
+
+
+/* range */
+
+
+.range {
+  -webkit-appearance: none;
+  appearance: none; 
+  width: 80%;
+  cursor: pointer;
+  outline: none;
+  border-radius: 15px;
+  height: 2px;
+  background: #fffefe;
+}
+
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none; 
+  height: 25px;
+  width: 25px;
+  background-color: #333;
+  border-radius: 50%;
+  border: none;
+  transition: .2s ease-in-out;
+}
+
+.range::-mz-range-thumb {
+  height: 15px;
+  width: 15px;
+  background-color: rgb(185, 185, 185);
+  border-radius: 50%;
+  border: none;
+  transition: .2s ease-in-out;
+}
+
+.range::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 10px rgba(233, 233, 233, 0.2)  
+}
+.range:active::-webkit-slider-thumb {
+  box-shadow: 0 0 0 13px rgba(233, 233, 233, 0.2)  
+}
+.range:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 13px rgba(233, 233, 233, 0.2)  
+}
+
+.range::-moz-range-thumb:hover {
+  box-shadow: 0 0 0 10px rgba(233, 233, 233, 0.2)  
+}
+.range:active::-moz-range-thumb {
+  box-shadow: 0 0 0 13px rgba(233, 233, 233, 0.2)  
+}
+.range:focus::-moz-range-thumb {
+  box-shadow: 0 0 0 13px rgba(233, 233, 233, 0.2)    
+}
+
+.value2, .value3 {
+  font-size: 26px;    
+  width: 50px;
+  text-align: center;
+}
+
+.hsValue{
+  color: white;
+  font-size: 1.2em;
+}
+
+.stepContainer {
+  width: 100%;
+  padding: 2px;
+  font-size: 14px;
+  border-radius: 4px;
+  display: flex;
+}
+
+.btn2 {
+  padding: 12px 24px;
+    margin-left: 3px;
+    font-size: 11px;
+    border: none;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer
+}
+
+.btn2:disabled{
+  background-color: cadetblue;
+  border: 1px solid black;
+  font-size: 8px;
+  cursor: default;
+}

@@ -5,7 +5,7 @@ const Landing = () => {
     return(
         <div>
             <h1>Hola</h1>
-            <Link to={"/home"}>
+            <Link to={"/recipes"}>
                 <button>A Home</button>
             </Link>
         </div>

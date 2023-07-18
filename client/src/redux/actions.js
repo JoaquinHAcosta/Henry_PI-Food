@@ -1,61 +1,90 @@
-import { GET_RECIPES, FILTER_CREATED, FILTER_DIET, ORDER_NAME, ORDER_BY_HS, GET_BY_ID, GET_BY_NAME, GET_DIETS, DELETE_RECIPE  } from "./action-types"
+import { 
+    GET_RECIPES, 
+    GET_BY_NAME, 
+    GET_BY_ID, 
+    GET_DIETS, 
+    POST_RECIPE,
+    FILTER_DIET, 
+    FILTER_CREATED, 
+    ORDER_NAME, 
+    ORDER_BY_HS, 
+    CLEAN_DETAIL,
+    PREV_PAGE,
+    NEXT_PAGE,
+    HANDLE_PAGE 
+  } from "./action-types"
 import axios from "axios"
 
 
 export const getAllRecipes = () => {
     return async function(dispatch){
-        const response = await axios.get("http://localhost:3001/recipes")
-        return dispatch({type: GET_RECIPES, payload: response.data})
-    }
-}
-
-export const filterRecipesByDiet = () => {
-    return { type: FILTER_DIET, payload}
-}
-
-export const filterCreated = () => {
-    return { type: FILTER_CREATED, payload}
-}
-
-export const orderByName = () => {
-    return { type: ORDER_NAME, payload}
-}
-
-export const orderByHs = () => {
-    return { type: ORDER_BY_HS, payload}
-}
-
-export const getRecipeById = (id) => {
-    return async function(dispatch){
-        const response = await axios.get(`/recipes/${id}`)
-        return dispatch({ type: GET_BY_ID, payload: response.data})
+        const { data } = await axios.get("http://localhost:3001/recipes")
+        return dispatch({type: GET_RECIPES, payload: data})
     }
 }
 
 export const getRecipeByName = (name) => {
     return async function(dispatch){
-        const response = await axios.get(`/recipes?name=${name}`)
-        return dispatch({ type: GET_BY_NAME, payload: response.data})
+        const { data } = await axios.get(`http://localhost:3001/recipes?name=${name}`)
+        console.log(data);
+        return dispatch({ type: GET_BY_NAME, payload: data})
+    }
+}
+
+export const getRecipeById = (id) => {
+    return async function(dispatch){
+        const { data } = await axios.get(`http://localhost:3001/recipes/${id}`)
+        return dispatch({ type: GET_BY_ID, payload: data})
     }
 }
 
 export const getTypeDiets = () => {
     return async function(dispatch){
-        const response = await axios.get("/diets")
-        return dispatch({ type: GET_DIETS, payload: response.data})
+        const { data } = await axios.get("http://localhost:3001/diets")
+        return dispatch({ type: GET_DIETS, payload: data})
     }
 }
 
-export const postRecipes = (payload) => {
+export const postRecipes = (newRecipe) => {
     return async function(dispatch){
-        const response = await axios.post("/recipe", payload)
-        return response
+        try {
+            const { data } = await axios.post("http://localhost:3001/recipes/createrecipe", newRecipe)
+
+            return dispatch({ type: POST_RECIPE, payload: data})
+        } catch (error) {
+            console.error(error)
+        }
     }
 }
 
-export const deleteRecipes = (id) => {
-    return async function(dispatch){
-        const response = await axios.delete(`/recipe/delete/${id}`)
-        return dispatch({ type: DELETE_RECIPE, payload: response.data })
-    }
+export const filterByDiet = (diet) => {
+    return { type: FILTER_DIET, payload: diet}
+}
+
+export const filterByOrigin = (origin) => {
+    return { type: FILTER_CREATED, payload: origin}
+}
+
+export const orderByName = (order) => {
+    return { type: ORDER_NAME, payload: order}
+}
+
+export const orderByHs = (order) => {
+    return { type: ORDER_BY_HS, payload: order}
+}
+
+export const cleanDetail = ( payload ) => {
+    return { type: CLEAN_DETAIL, payload: payload }
+}
+
+export const prevPage = () => {
+    return { type: PREV_PAGE }
+}
+
+export const nextPage = () => {
+    return { type: NEXT_PAGE }
+}
+
+export const handlePage = (num) => {
+    return { type: HANDLE_PAGE, payload: num}
 }

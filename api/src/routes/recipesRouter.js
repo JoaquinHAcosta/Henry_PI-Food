@@ -6,6 +6,6 @@ recipesRouter.get("/", getRecipesHandler)
 
 recipesRouter.get("/:idRecipe", getRecipeByIdHandler)
 
-recipesRouter.post("/", postRecipeHandler)
+recipesRouter.post("/createrecipe", postRecipeHandler)
 
 module.exports = recipesRouter

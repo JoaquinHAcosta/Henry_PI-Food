@@ -6,7 +6,7 @@ const API_URL = "https://api.spoonacular.com/recipes"
 const getDiets = async () => {
     try {
         //const { results } = await axios(`${API_URL}/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true`).data
-        const response = await axios.get(`${API_URL}/complexSearch?apiKey=${API_KEY}&number=5&addRecipeInformation=true`)
+        const response = await axios.get(`${API_URL}/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true`)
         const results = response.data.results;
         const dataDiets = results.flatMap((recipe) => recipe.diets)
 

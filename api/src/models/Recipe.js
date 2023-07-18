@@ -26,9 +26,21 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     steps: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    } ,
+      type: DataTypes.ARRAY(DataTypes.JSONB),
+      allowNull: false,
+      defaultValue: [],
+      validate: {
+        isValidArray(value) {
+          if (!Array.isArray(value) || value.length === 0) {
+            throw new Error("Los pasos no pueden estar vacios")
+          }
+        }
+      }
+    },
+    dietsName: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true
+    },
     created: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

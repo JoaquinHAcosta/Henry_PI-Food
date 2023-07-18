@@ -1,26 +1,99 @@
+import { useDispatch, useSelector } from "react-redux"
 import style from "./CreateRecipe.module.css"
 import { useState } from "react"
+import { postRecipes } from "../../../redux/actions"
 
-const CreateRecipe = () => {
+const CreateRecipe = ( ) => {
+
+    const dispatch = useDispatch()
 
     const [ recipe, setRecipe ] = useState({
         name: "",
         summary: "",
-        healthScore: "",
-        steps: "",
+        healthScore: 0,
+        steps: [{number: 1, step: ""}],
         image: "",
-        Diets: ""
+        typeDiets: [],
+        dietsName: []
     })
-
+    
+    // useEffect(() => {
+    //     dispatch(getTypeDiets())
+    //     console.log("dispatch de diets en form");
+    // }, [dispatch])
+    
+    const allDiets = useSelector((state) => state.allDiets)
+    
     const handleChange = (event) => {
         setRecipe({
             ...recipe,
-            [event.target.name] : event.target.value
+            [event.target.name] : event.target.value,
         })
     }
 
-    const handleSubmit = (event) => {
+    const handleDiets = (event) => {
+        const dietId = event.target.value; //trae el valor de id desde el input
+        const dietName = allDiets.find((diet) => diet.id === +dietId)?.name //busca el nombre asociado al id en el estado global
+
+        if(!dietName) return //si el id no esta registrado en el estado global retorna
+
+        // const isDietChecked = recipe.typeDiets.includes(dietId);  //si ya existe el id de la dieta en el estado local da true
+        const isDietChecked = recipe.dietsName.includes(dietName);
+
+        if (isDietChecked) { //si existe la dieta entra aca
+          const updatedDietsId = recipe.typeDiets.filter((item) => item !== dietId); //borra el id del array de ids
+          const updatedDietsName = recipe.dietsName.filter((item) => item !== dietName); //borra el name del array de names
+          setRecipe({ ...recipe, typeDiets: updatedDietsId, dietsName: updatedDietsName }); //borra la dieta del id y del name
+        } else { //si da false y no esta incluida la dieta, las agrega al estado local
+          setRecipe({ ...recipe, typeDiets: [...recipe.typeDiets, dietId], dietsName: [...recipe.dietsName, dietName] });
+        }
+    };
+
+    const handleSteps = (event, index, field) => {
+        const newSteps = [...recipe.steps]
+        newSteps[index][field] = event.target.value
+        setRecipe({
+            ...recipe,
+            steps: newSteps
+        })
+    }
+
+    const addStep = () => {
+        const newStepNumber = recipe.steps.length + 1
+        setRecipe({
+            ...recipe,
+            steps: [...recipe.steps, { number: newStepNumber, step: ""}]
+        })
+    }
+
+    const removeStep = (index) => {
+        const newSteps = [...recipe.steps]
+        newSteps.splice(index, 1)
+        setRecipe({
+            ...recipe,
+            steps: newSteps
+        })
+    }
+
+    const handleSubmit = async (event) => {
         event.preventDefault()
+        console.log(recipe);
+        try {
+            await console.log(dispatch(postRecipes(recipe)));
+            // alert("Receta creada")
+            // setRecipe({
+            //     name: "",
+            //     summary: "",
+            //     healthScore: "",
+            //     steps: [""],
+            //     image: "",
+            //     typeDiets: [],
+            //     diets: []
+            // })
+        } catch (error) {
+            console.error("Error al crear la receta")
+        }
+        
     }
 
     return(
@@ -41,23 +114,43 @@ const CreateRecipe = () => {
                     </div>
 
                     <div className={style.formGroup}>
-                        <label htmlFor="healthScore">Health Score: </label>
-                        <input onChange={handleChange} type="text" name="healthScore" value={recipe.healthScore}/>
+                        <label htmlFor="healthScore">Health Score: <b className={style.hsValue}>{recipe.healthScore}</b> </label>
+                        <input className={style.range} onChange={handleChange} type="range" name="healthScore" value={recipe.healthScore}/>
                     </div>
 
                     <div className={style.formGroup}>
                         <label htmlFor="steps">Paso a paso: </label>
-                        <input onChange={handleChange} type="text" name="steps" value={recipe.steps}/>
+                        {
+                            recipe.steps.map((step, index) => (
+                                <div key={index} className={style.stepContainer}>
+                                    <input type="text" onChange={(event) => handleSteps(event, index, "step")} value={step.step} />
+                                    {
+                                        index > 0 && (
+                                            <button className={style.btn2} onClick={() => removeStep(index)}>Eliminar</button>
+                                        )
+                                    }
+                                </div>
+                            ))
+                        }
+                        <button className={style.btn2} disabled={recipe.steps[recipe.steps.length-1].step !== "" ? false : true} onClick={addStep}>Agregar Paso</button>
                     </div>
 
                     <div className={style.formGroup}>
                         <label htmlFor="image">Imagen</label>
-                        <input onChange={handleChange} type="text" name="image" value={recipe.image}/>
+                        <input onChange={handleChange} type="text" name="image" value={recipe.image} placeholder="image_default.jpg"/>
                     </div>
 
                     <div className={style.formGroup}>
                         <label htmlFor="Diets">Tipo de dieta</label>
-                        <input onChange={handleChange} type="text" name="Diets" value={recipe.Diets}/>
+                        <div className={style.formDiet}>
+                        { allDiets?.map((diet) => {
+                            return(
+                            <div key={diet.id} className={style.dietsC}>
+                                <label href="diets">{diet.name.toUpperCase()}</label>
+                                <input onChange={handleDiets}  type="checkbox" name="typeDiets" value={diet.id}/>
+                            </div>
+                        )})}
+                        </div>         
                     </div>
                 
                     <button className={style.btn} type="submit">Submit</button>

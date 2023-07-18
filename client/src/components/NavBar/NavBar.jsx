@@ -10,7 +10,7 @@ const NavBar = ( ) => {
     return(
         <div className={style.nav}>
           <div>
-            <Link to={"/home"}>
+            <Link to={"/recipes"}>
                 <button className={style.btn}>Home</button>
             </Link>
           </div>
@@ -19,12 +19,12 @@ const NavBar = ( ) => {
           </div>
           <div>
             <Link to={"/about"}>
-                <button className={style.btn}>Linkedin</button>
+                <button className={style.btn}>L</button>
             </Link>
             <Link to={"/about"}>
-                <button className={style.btn}>Github</button>
+                <button className={style.btn}>G</button>
             </Link>
-            <Link to={"/createrecipe"}>
+            <Link to={"/recipes/createrecipe"}>
                 <button className={style.btn}>Add New Recipe</button>
             </Link>
           </div>

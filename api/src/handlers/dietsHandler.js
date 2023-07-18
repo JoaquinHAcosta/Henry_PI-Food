@@ -8,7 +8,6 @@ const getDietsHandler = async (req, res) => {
         if (diets.length === 0) {
             await getDiets()
         }
-        console.log("diets handler");
         const dbDiets = await Diets.findAll()
 
         return res.status(200).json(dbDiets)
