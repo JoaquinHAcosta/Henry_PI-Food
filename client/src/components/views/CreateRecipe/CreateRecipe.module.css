@@ -195,3 +195,12 @@
   font-size: 8px;
   cursor: default;
 }
+
+.error{
+  color: rgb(255, 0, 0);
+  background-color: rgb(246, 223, 223);
+  display: flex;
+  border-radius: 10px;
+  padding: 10px 15px 10px 15px;
+  text-align: center;
+ }

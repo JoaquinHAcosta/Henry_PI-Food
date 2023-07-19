@@ -11,7 +11,9 @@ import {
     CLEAN_DETAIL, 
     PREV_PAGE, 
     NEXT_PAGE,
-    HANDLE_PAGE  
+    HANDLE_PAGE,  
+    RESET_RECIPES,
+    RESET_FILTERS
 } from "./action-types"
 
 const initialState = {
@@ -20,7 +22,12 @@ const initialState = {
     recipeDetail: {},
     allDiets: [],
     numPage: 1,
-    // searchedRecipes: [],
+    searchedRecipes: [],
+    stringSearched: "",
+    filterDiet: "allDiets",
+    filterOrigin: "All",
+    orderAlph: "Default",
+    orderHS: "M",
 }
 
 const reducer = (state = initialState, actions) => {
@@ -36,17 +43,12 @@ const reducer = (state = initialState, actions) => {
             return {
                 ...state,
                 recipes: payload,
-                allRecipes: payload
+                stringSearched: actions.stringSearch
             }
         case GET_BY_ID: 
             return {
                 ...state,
                 recipeDetail: payload
-            }
-        case CLEAN_DETAIL:
-            return {
-                ...state,
-                recipeDetail: {}
             }
         case GET_DIETS: 
             return {
@@ -54,7 +56,6 @@ const reducer = (state = initialState, actions) => {
                 allDiets: payload
             }
         case POST_RECIPE:
-            // console.log(payload); aca se puede ver el objeto que se sube a la bd
             return {
                 ...state,
                 allRecipes: [...state.allRecipes, payload],
@@ -65,7 +66,8 @@ const reducer = (state = initialState, actions) => {
             const dietFilter = allRec.filter((rec) => rec.dietsName.includes(payload))
             return {
                 ...state,
-                recipes: payload === "allDiets" ? allRec : dietFilter
+                recipes: payload === "allDiets" ? allRec : dietFilter,
+                filterDiet: payload
             }
         case FILTER_CREATED:  //All api db
             const originRecipes = state.allRecipes
@@ -73,25 +75,26 @@ const reducer = (state = initialState, actions) => {
             const fromBDD = originRecipes.filter((recipe) => isNaN(+recipe.id));
             return {
                 ...state,
-                recipes: payload === "api" ? fromApi : (payload === "db" ? fromBDD : originRecipes)
+                recipes: payload === "api" ? fromApi : (payload === "db" ? fromBDD : originRecipes),
+                filterOrigin: payload
             }
         case ORDER_NAME:
-            const order = [...state.allRecipes]
+            const order = [...state.recipes]
             return {
                 ...state,
                 recipes: payload === "A"
-                // ? order.sort((a, b) => a.name - b.name)
-                // : order.sort((a, b) => b.name - a.name)
                 ? order.sort((a, b) => a.name.localeCompare(b.name))
-                : order.sort((a, b) => b.name.localeCompare(a.name))
+                : order.sort((a, b) => b.name.localeCompare(a.name)),
+                orderAlph: payload
             }
         case ORDER_BY_HS:
-            const orderHS = [...state.allRecipes]
+            const orderHS = [...state.recipes]
             const orderA = orderHS.sort((a, b) => a.healthScore - b.healthScore)
             const orderD = orderHS.sort((a, b) => b.healthScore - a.healthScore) 
             return {
                 ...state,
-                recipes: payload === "A" ? orderA : (payload === "D" ? orderD : orderHS)
+                recipes: payload === "A" ? orderA : (payload === "D" ? orderD : orderHS),
+                orderHS: payload
             }
         case PREV_PAGE: {
             return {
@@ -109,6 +112,29 @@ const reducer = (state = initialState, actions) => {
             return {
                 ...state,
                 numPage: payload
+            }
+        }
+        case RESET_RECIPES: {
+            return {
+                ...state,
+                recipes: state.allRecipes
+            }
+        }
+        case CLEAN_DETAIL: {
+            return {
+                ...state,
+                recipeDetail: {}
+            }
+        }
+        case RESET_FILTERS: {
+            return {
+                ...state,
+                recipes: state.allRecipes,
+                filterDiet: "allDiets",
+                filterOrigin: "All",
+                orderAlph: "Default",
+                orderHS: "M",
+                stringSearched: ""
             }
         }
         default:

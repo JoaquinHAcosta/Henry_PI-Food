@@ -1,6 +1,6 @@
 import style from "./SearchBar.module.css"
-import { useState, useEffect } from "react";
-import { getRecipeByName } from "../../../redux/actions";
+import { useState } from "react";
+import { getRecipeByName, handlePage } from "../../../redux/actions";
 import { useDispatch } from "react-redux";
 
 const SearchBar = () => {
@@ -14,7 +14,8 @@ const SearchBar = () => {
 
     const handleSearch = () => {
         dispatch(getRecipeByName(recipeName))
-        console.log(recipeName);
+        dispatch(handlePage(1))
+        setRecipeName("")
     }
 
     return (

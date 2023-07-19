@@ -1,0 +1,31 @@
+.container {
+    user-select: none;
+    width: 30em;
+    height: 30em;
+    margin: 2rem auto;
+    border: 1px solid #ffffff22;
+    background-color: #24b806;
+    background: linear-gradient(0deg, rgb(20, 160, 27) 0%, rgba(35, 122, 17, 0.5) 100%);
+    box-shadow: 0 7px 20px 5px #00000088;
+    border-radius: .7rem;
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    overflow: hidden;
+    transition: .5s all;
+    display: flex;
+    justify-content: space-evenly;
+	align-items: center;
+    flex-direction: column;
+}
+
+.containerEr{
+    font-size: 3em;
+}
+
+.containerJr{
+    font-size: 1.5em;
+}
+
+h2{
+    color: red;
+}

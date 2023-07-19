@@ -45,7 +45,7 @@ const infoCleaner = (array) => array.map(recipe => {
         id: recipe.id,
         name: recipe.title,
         dietsName: recipe.diets,
-        imagen: recipe.image,
+        image: recipe.image,
         summary: recipe.summary.replace(/(&nbsp;|<([^>]+)>)/ig, ""),
         healthScore: recipe.healthScore,
         steps: recipe.analyzedInstructions[0]?.steps.map((element) => {
@@ -78,7 +78,7 @@ const getAllRecipes = async () => {
     const infoDb = await Recipe.findAll()
 
     //ej= https://api.spoonacular.com/recipes/complexSearch?apiKey=b2e567c3deb34b60ac342d1872d11bd8&number=10&addRecipeInformation=true`
-    const { data } = await axios.get(`${API_URL}/complexSearch?apiKey=${API_KEY}&number=15&addRecipeInformation=true`)
+    const { data } = await axios.get(`${API_URL}/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true`)
 
     const infoApi = data.results
     const recipeApi = infoCleaner(infoApi)
@@ -87,7 +87,54 @@ const getAllRecipes = async () => {
 }
 
 
-
+const postRecipeController = async (req, res) => {
+    try {
+      const { name, image, summary, healthScore, steps, typeDiets, dietsName } = req.body;
+  
+      //validación de campos
+      if (!name || !image || !summary || !healthScore || !steps || !typeDiets || !dietsName) {
+        throw new Error("All fields are required for validation.");
+      }
+  
+      //verificación de coindicencias de nombre de receta
+      const existingRecipe = await Recipe.findOne({ where: { name } });
+      if (existingRecipe) {
+        throw new Error(`Recipe with name '${name}' already exists.`);
+      }
+  
+      // creacion de la nueva receta
+      const newRecipe = await Recipe.create({
+        name,
+        image,
+        summary,
+        healthScore,
+        steps,
+        dietsName,
+      });
+  
+      // asociacion de las dietas a la receta
+      const selectedDiets = await Diets.findAll({ where: { id: typeDiets } });
+      if (!selectedDiets.length) {
+        throw new Error('No diet found with the provided IDs');
+      }
+      await newRecipe.addDiets(selectedDiets);
+  
+      // mapeo de dietas y asociacion a la receta por id
+      const resultRecipe = await Recipe.findByPk(newRecipe.id, {
+        include: [Diets],
+      });
+  
+      res.status(200).json(resultRecipe);
+    } catch (error) {
+      if (error.message === "No diets found with the provided IDs") {
+        res.status(400).json({ error: error.message });
+      } else if (error.message === "All fields are required for validation.") {
+        res.status(404).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "An error occurred while creating the recipe" });
+      }
+    }
+  };
 
 
 
@@ -95,5 +142,6 @@ const getAllRecipes = async () => {
 module.exports = {
     getRecipeById,
     getRecipeByName,
-    getAllRecipes
+    getAllRecipes,
+    postRecipeController
 }

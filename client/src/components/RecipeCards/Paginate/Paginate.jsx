@@ -36,10 +36,3 @@ const Paginate = ( {cantPages, numPage }) => {
 }
 
 export default Paginate
-
-
-/* <div>
-    <button className={style.btn} onClick={prevHandler}>Prev</button>
-        <a className={style.btn}>{currentPage}</a>
-    <button className={style.btn} onClick={nextHandler}>Next</button>
-</div> */

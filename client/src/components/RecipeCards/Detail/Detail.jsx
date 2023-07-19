@@ -1,8 +1,8 @@
 import style from "./Detail.module.css"
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { useEffect } from "react"
 import data from "../../../data"
-import { getRecipeById } from "../../../redux/actions"
+import { getRecipeById, cleanDetail } from "../../../redux/actions"
 import { useDispatch, useSelector } from "react-redux"
 
 const Detail = () => {
@@ -14,11 +14,23 @@ const Detail = () => {
 
     useEffect(() => {
         dispatch(getRecipeById(id))
+
+        return () => {
+            dispatch(cleanDetail());
+        };
     }, [dispatch, id])
-    //falta el dismountDetail
+
     
     return(
-        <div className={style.container}>
+        <div className={style.bigContainer}>
+            { Object.keys(recipe).length === 0 
+            ? <div className={style.loadContainer}>
+                    <span class={style.loader}></span>
+              </div> 
+            :<div className={style.container}>
+                <Link to={"/recipes"}>
+                    <button className={style.closeBtn}>X</button>
+                </Link>
             <div className={style.main}>
                 <div className={style.block}>
                     <img className={style.image} src={recipe?.image} alt={recipe?.name} />
@@ -59,6 +71,7 @@ const Detail = () => {
                 </div>                
                 
             </div>
+            </div>}
         </div>
     )
 }

@@ -2,7 +2,7 @@ import style from "./Card.module.css"
 import { Link } from "react-router-dom"
 import imageDefault from "../../mixutils/image_default.jpg"
 
-const Card = ({id, name, imagen, dietsName}) => {
+const Card = ({id, name, image, dietsName}) => {
 
     const handlerError = (event) => {
         event.target.src = imageDefault
@@ -12,7 +12,7 @@ const Card = ({id, name, imagen, dietsName}) => {
         <div className={style.container}>
             <Link className={style.linkfeo} to={`/recipes/detail/${id}`}>
             <div className={style.main}>
-                <img className={style.image} src={imagen} onError={handlerError} alt={name}/>
+                <img className={style.image} src={image} onError={handlerError} alt={name}/>
                 <div className={style.info}>
                     <h1 className={style.tittle}>{name}</h1>
                     <div className={style.diets}>

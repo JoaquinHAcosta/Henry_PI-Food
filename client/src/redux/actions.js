@@ -8,10 +8,12 @@ import {
     FILTER_CREATED, 
     ORDER_NAME, 
     ORDER_BY_HS, 
-    CLEAN_DETAIL,
     PREV_PAGE,
     NEXT_PAGE,
-    HANDLE_PAGE 
+    HANDLE_PAGE,
+    RESET_RECIPES,
+    CLEAN_DETAIL,
+    RESET_FILTERS 
   } from "./action-types"
 import axios from "axios"
 
@@ -27,7 +29,7 @@ export const getRecipeByName = (name) => {
     return async function(dispatch){
         const { data } = await axios.get(`http://localhost:3001/recipes?name=${name}`)
         console.log(data);
-        return dispatch({ type: GET_BY_NAME, payload: data})
+        return dispatch({ type: GET_BY_NAME, payload: data, stringSearch: name })
     }
 }
 
@@ -49,10 +51,10 @@ export const postRecipes = (newRecipe) => {
     return async function(dispatch){
         try {
             const { data } = await axios.post("http://localhost:3001/recipes/createrecipe", newRecipe)
-
+            window.alert(`Receta creada con exito`)
             return dispatch({ type: POST_RECIPE, payload: data})
         } catch (error) {
-            console.error(error)
+            window.alert(`Error al crear receta, ${error}`)
         }
     }
 }
@@ -73,10 +75,6 @@ export const orderByHs = (order) => {
     return { type: ORDER_BY_HS, payload: order}
 }
 
-export const cleanDetail = ( payload ) => {
-    return { type: CLEAN_DETAIL, payload: payload }
-}
-
 export const prevPage = () => {
     return { type: PREV_PAGE }
 }
@@ -87,4 +85,16 @@ export const nextPage = () => {
 
 export const handlePage = (num) => {
     return { type: HANDLE_PAGE, payload: num}
+}
+
+export const resetRecipes = () => {
+    return { type: RESET_RECIPES }
+}
+
+export const cleanDetail = () => {
+    return { type: CLEAN_DETAIL }
+}
+
+export const resetFilters = () => {
+    return { type: RESET_FILTERS }
 }

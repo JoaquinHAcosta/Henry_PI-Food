@@ -1,13 +1,10 @@
-//import SearchBar from "../SearchBar/SearchBar"
 import style from "./NavBar.module.css"
 import { Link } from "react-router-dom"
 import SearchBar from "./SearchBar/SearchBar"
 
 const NavBar = ( ) => {
 
-  
-
-    return(
+  return(
         <div className={style.nav}>
           <div>
             <Link to={"/recipes"}>
