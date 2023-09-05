@@ -3,6 +3,10 @@ import reducer from './reducer';
 import thunkMiddleware from 'redux-thunk'
 
 
+const Activities = [{name: "correr", countries: [{name: "argentina"}]}]
+
+
+
 const composeEnhacer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // esta linea es para conectar don la extensnion del navegador => REDUX D
 
 const store = createStore(

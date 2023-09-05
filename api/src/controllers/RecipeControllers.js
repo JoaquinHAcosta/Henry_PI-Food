@@ -12,7 +12,7 @@ const getRecipeById = async (idRecipe) => {
             const recipe = await Recipe.findByPk(idRecipe, {include: [{model: Diets, through:{attributes:[]}}]})
             return recipe
         } else {
-            //ejemplo = https://api.spoonacular.com/recipes/1/information?apiKey=1f9d8f6742b748d0a2eec9ec5a00fbfc
+            //ejemplo = https://api.spoonacular.com/recipes/1/information?apiKey=1940bcfa54b24d0a89dd82a8b239fd62
             const { data } = await axios.get(`${API_URL}/${idRecipe}/information?apiKey=${API_KEY}`)
 
             const recipe = {
@@ -35,8 +35,6 @@ const getRecipeById = async (idRecipe) => {
     } catch (error) {
         return { error: `No existe la receta con ID: ${idRecipe}` }
     }
-
-
 }
 
 //funcion generica, se puede mover a src/utils/index.js e importarla para usarla

@@ -14,7 +14,7 @@ const Detail = () => {
 
     useEffect(() => {
         dispatch(getRecipeById(id))
-
+        
         return () => {
             dispatch(cleanDetail());
         };

@@ -1,7 +1,6 @@
 import Card from "./Card/Card"
 import style from "./RecipeCards.module.css"
 import Paginate from "./Paginate/Paginate"
-import NotFound from "../views/NotFound/NotFound"
 import Filters from "../NavBar/Filters/Filters"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
@@ -68,3 +67,4 @@ const RecipeCards = ( ) => {
 }
 
 export default RecipeCards
+

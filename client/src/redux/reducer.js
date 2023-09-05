@@ -29,7 +29,7 @@ const initialState = {
     orderAlph: "Default",
     orderHS: "M",
 }
-
+//[1,2,3,4,5,6]
 const reducer = (state = initialState, actions) => {
     const { type, payload } = actions
     switch (type) {

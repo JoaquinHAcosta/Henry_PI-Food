@@ -141,7 +141,7 @@ const CreateRecipe = (  ) => {
 
                     <div className={style.formGroup}>
                         <label htmlFor="image">Imagen</label>
-                        <input onChange={handleChange} type="text" name="image" value={recipe.image} placeholder="image_default.jpg"/>
+                        <input onChange={handleChange} type="text" name="image" value={recipe.image} placeholder="image URL"/>
                         {errors.image && <p className={style.error}>{errors.image}</p>}
                     </div>
 

@@ -7,7 +7,6 @@ const Filters = ( {allDiets} ) => {
     const dispatch = useDispatch()
 
     const {
-        recipes,
         filterDiet, 
         filterOrigin, 
         orderAlph, 
@@ -43,12 +42,12 @@ const Filters = ( {allDiets} ) => {
         <div className={style.filters}>
             <div>
                 <select onChange={handleOrder} value={orderAlph} className={style.classic}>
-                    <option value="Default">Default</option>
+                    <option value="Default" selected disabled hidden>Default</option>
                     <option value="A">A-z</option>
                     <option value="D">Z-a</option>
                 </select>
                 <select onChange={handleHs} value={orderHS} className={style.classic}>
-                    <option value="M">Mixed HS</option>
+                    <option value="M" selected disabled hidden>Mixed HS</option>
                     <option value="A">HS +</option>
                     <option value="D">HS -</option>
                 </select>
