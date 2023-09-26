@@ -1,6 +1,9 @@
 import style from "./NavBar.module.css"
 import { Link } from "react-router-dom"
 import SearchBar from "./SearchBar/SearchBar"
+import logoFood from '../../assets/logo-foodie-223.png'
+import linkedinLogo from '../../assets/linkedin.png'
+import githubLogo from '../../assets/github.png'
 
 const NavBar = ( ) => {
 
@@ -8,23 +11,24 @@ const NavBar = ( ) => {
         <div className={style.nav}>
           <div>
             <Link to={"/recipes"}>
-                <button className={style.btn}>Home</button>
+                <img className={style.logoMain} src={logoFood} alt="Logo foodie" />
             </Link>
           </div>
-          <div>
+          <div className={style.searchBar}>
             <SearchBar/>
           </div>
-          <div>
-            <Link to={"/about"}>
-                <button className={style.btn}>L</button>
-            </Link>
-            <Link to={"/about"}>
-                <button className={style.btn}>G</button>
-            </Link>
-            <Link to={"/recipes/createrecipe"}>
+          <Link to={"/recipes/createrecipe"}>
                 <button className={style.btn}>Add New Recipe</button>
+          </Link>
+          <div>
+            <Link to={"https://www.linkedin.com/in/stratozoma/"}>
+              <img className={style.socialsIcon} src={linkedinLogo} alt="Linkedin logo" />
+            </Link>
+            <Link to={"https://github.com/JoaquinHAcosta"}>
+              <img className={style.socialsIcon} src={githubLogo} alt="Github logo" />
             </Link>
           </div>
+            
         </div>
     )
 }
