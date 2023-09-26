@@ -3,16 +3,16 @@
   command = "npm run build"
   
   # Directorio de construcción de la aplicación cliente
-  publish = "client/build"
+  publish = "client/build" # Carpeta donde se generan los archivos de construcción de React
 
 # Configuración para el servidor Express (API)
 [[redirects]]
   from = "/api/*"
-  to = "api/:splat"
+  to = "/api/:splat"
   status = 200
 
 # Redireccionar todas las demás rutas a la aplicación cliente
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/client/index.html" # Ruta relativa al archivo index.html de la SPA
   status = 200
